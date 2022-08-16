@@ -1,0 +1,7 @@
+#sidebar{
+    transition: all 0.5s;
+}
+
+.sidebarclose{
+    transform: translateX(-100%);
+}

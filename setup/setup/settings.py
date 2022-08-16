@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     #django apps
     "home",
+    "category",
 
     # packange
     'bootstrap5',

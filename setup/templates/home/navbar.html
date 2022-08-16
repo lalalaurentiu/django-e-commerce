@@ -1,33 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container flex-row">
-      <button class="btn btn-light text-primary d-md-none bg-white">
-        <i class="fas fa-bars"></i>
-      </button>
-      <a class="navbar-brand col-lg-8" href="#">e-commerce</a>
-      <button class="btn btn-light text-primary d-lg-none bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse col-lg-4" id="navbarSupportedContent">
-        <ul class="navbar-nav m-auto mb-2 mb-lg-0 w-100 justify-content-end">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-user text-primary"></i>
-              Profile
+<nav class="navbar bg-primary text-white d-none d-lg-flex">
+    <div class="container justify-content-center">
+      <span class="navbar-brand mb-0 h1">Category</span>
+      {% for category in categorys %}
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if category.svg %}
+                    {{ category.svg|safe }}
+                    
+                {% else %}
+                    {{ category.image.as_html }}
+                {% endif %}
+                {{ category.title }}
             </a>
-            <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+        
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-shopping-cart text-primary"></i>
-              Cart
-            </a>
-          </li>
-        </ul>
-      </div>
+        </div>
+      {% endfor %}
     </div>
-  </nav>
+</nav>

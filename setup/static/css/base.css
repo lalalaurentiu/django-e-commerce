@@ -1,5 +1,6 @@
 #sidebar{
     transition: all 0.5s;
+    background:rgba(0, 0, 0, 0.5) ;
 }
 
 .sidebarclose{

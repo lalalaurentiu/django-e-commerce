@@ -15,7 +15,7 @@ def home(request):
 
     context = {
         "claims":claims,
-        "categorys":categorys
+        # "categorys":categorys
     }
 
     return render(request, template, context)

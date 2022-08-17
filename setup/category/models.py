@@ -1,4 +1,3 @@
-from tkinter.tix import Balloon
 from django.db import models 
 
 # change 
@@ -16,3 +15,18 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+class Brands(models.Model):
+    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name="categorys")
+    title = models.TextField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+class Products(models.Model):
+    brand = models.ForeignKey(Brands, null=True, on_delete=models.CASCADE, related_name="brands")
+    name = models.TextField(max_length=100)
+    description = models.TextField()
+    details = models.TextField()
+    image = models.ImageField(upload_to = "images/Products")
+    price = models.DecimalField(max_digits = 5, decimal_places = 2)

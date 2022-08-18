@@ -4,18 +4,19 @@ from .models import (
     Claim
 )
 from category.models import (
-    Category
+    Category,
+    Products
 )
 
 def home(request):
     template = "home/home.html"
 
     claims = Claim.objects.all()
-    categorys = Category.objects.all()
+    products = Products.objects.all()
 
     context = {
         "claims":claims,
-        # "categorys":categorys
+        "products":products
     }
 
     return render(request, template, context)

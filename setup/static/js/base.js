@@ -19,3 +19,14 @@ sidebarbutton.addEventListener("click", () =>{
         }
     });
 });
+
+let headernav = document.getElementById("headernav");
+
+document.addEventListener("scroll", e =>{
+    if (this.scrollY > 144){
+        headernav.style.maxHeight = "48px";
+        
+    }else {
+        headernav.style.maxHeight = "70px";
+    };
+});

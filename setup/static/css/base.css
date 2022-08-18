@@ -6,3 +6,8 @@
 .sidebarclose{
     transform: translateX(-100%);
 }
+
+#headernav{
+    transition: max-height 0.2s ease-out;
+    height: 70px;
+}

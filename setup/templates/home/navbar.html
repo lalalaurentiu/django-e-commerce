@@ -6,7 +6,6 @@
             <a class="nav-link dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 {% if category.svg %}
                     {{ category.svg|safe }}
-                    
                 {% else %}
                     {{ category.image.as_html }}
                 {% endif %}
@@ -14,9 +13,9 @@
             </a>
         
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                {% for brands in category.brands.all%}
+                    <li><a class="dropdown-item" href="#">{{ brands.title}}</a></li>
+                {% endfor %}
             </ul>
         </div>
       {% endfor %}

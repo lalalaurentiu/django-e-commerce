@@ -1,12 +1,14 @@
 from .models import (
-    Category
+    Category,
+    Products
 )
 
 def items(request):
     categorys = Category.objects.all()
+    products = Products.objects.all()
 
     context = {
-        "categorys":categorys
+        "categorys":categorys,
     }
 
     return context

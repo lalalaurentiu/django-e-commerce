@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.db import models 
 
 # change 
@@ -26,6 +25,7 @@ class Category(models.Model):
 
 class Products(models.Model):
     brand = models.ForeignKey(Brands, null=True, on_delete=models.CASCADE, related_name="productBrands")
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE, related_name="productsCategory")
     name = models.TextField(max_length=100)
     description = models.TextField()
     details = models.TextField()

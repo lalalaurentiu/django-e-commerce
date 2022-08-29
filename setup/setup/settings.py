@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # packange
     'bootstrap5',
     'fontawesome_5',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [

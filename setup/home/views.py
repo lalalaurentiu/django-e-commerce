@@ -11,7 +11,7 @@ from category.models import (
 def home(request):
     template = "home/home.html"
 
-    carousel = Claim.objects.all()
+    carousel = Claim.objects.all() #for modify in 
     products = Products.objects.all()
 
     context = {

@@ -11,11 +11,11 @@ from category.models import (
 def home(request):
     template = "home/home.html"
 
-    claims = Claim.objects.all()
+    carousel = Claim.objects.all()
     products = Products.objects.all()
 
     context = {
-        "claims":claims,
+        "carousel":carousel,
         "products":products
     }
 

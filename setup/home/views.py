@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import render
 from .models import (
     Claim

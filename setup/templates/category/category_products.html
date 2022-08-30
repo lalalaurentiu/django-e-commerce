@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for category in products %}
+        {% for product in category.productsCategory.all %}
+        <br>
+        <br>
+        <br>
+        {{category.title}}
+            <div class="d-flex">
+                {{ product.name }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

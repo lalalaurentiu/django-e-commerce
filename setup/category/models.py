@@ -10,18 +10,31 @@ from fontawesome_5.fields import IconField
 
 class Brands(models.Model):
     title = models.TextField(max_length=50)
+    slug = models.SlugField(unique=True, null=True, blank=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = self.title.replace(" ", "_")
+        super(Brands, self).save(*args, **kwargs)
 
 class Category(models.Model):
     brands = models.ManyToManyField(Brands ,related_name="brands")
     title = models.TextField(max_length=100)
     image = IconField()
     svg = models.TextField(null=True, blank=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+
+    def get_absolute_url(self):
+        pass
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = self.title.replace(" ", "_")
+        super(Category, self).save(*args, **kwargs)
 
 class Products(models.Model):
     brand = models.ForeignKey(Brands, null=True, on_delete=models.CASCADE, related_name="productBrands")

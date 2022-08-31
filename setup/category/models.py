@@ -46,6 +46,7 @@ class Products(models.Model):
     price = models.DecimalField(max_digits = 5, decimal_places = 2)
     discount = models.FloatField(default=0)
     slug = models.SlugField(unique=True, null=True, blank=True)
+    raiting = models.DecimalField(default = 5, max_digits=2, decimal_places=1)
 
     def __str__(self):
         return self.name

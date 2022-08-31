@@ -1,3 +1,4 @@
+{% load range_iterator %}
 <div class="container-md mt-md-5 mb-md-5 p-0">
     <div class="card border-0">
         <div class="card-header justify-content-center d-flex border">
@@ -45,10 +46,23 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-primary d-flex justify-content-around align-items-center">
+                                                <div class="text-primary d-flex justify-content-start align-items-center">
                                                     <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
                                                     <div><strong>0.00</strong></div>
                                                 </div>
+                                                <fieldset class="rating">
+                                                    {% with product.raiting|floatformat as star %}
+                                                        {% for i in 6|times %}
+                                                            {% if i|floatformat <= star %}
+                                                                <input type="radio"  name="rating" checked/>
+                                                                <label class = "full" ></i></label>
+                                                            {% else %}
+                                                                <input type="radio"  name="rating" />
+                                                                <label class = "full" ></i></label>
+                                                            {% endif%}
+                                                        {% endfor %}
+                                                    {% endwith %}
+                                                </fieldset>
                                             </div>
                                         </div>
                                     </div>
@@ -87,12 +101,24 @@
                                             </div>
                                             </div>
                                         </div>
-                                        <div class="text-primary d-flex justify-content-around align-items-center">
+                                        <div class="text-primary d-flex justify-content-start align-items-center">
                                             <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
                                             <div><strong>0.00</strong></div>
                                         </div>
+                                        <fieldset class="rating">
+                                            {% with product.raiting|floatformat as star %}
+                                                {% for i in 6|times %}
+                                                    {% if i|floatformat <= star %}
+                                                        <input type="radio"  name="rating" checked/>
+                                                        <label class = "full" ></i></label>
+                                                    {% else %}
+                                                        <input type="radio"  name="rating" />
+                                                        <label class = "full" ></i></label>
+                                                    {% endif%}
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </fieldset>
                                     </div>
-                                    
                                 </div>
                             {% endif %}
                         {% endfor %}

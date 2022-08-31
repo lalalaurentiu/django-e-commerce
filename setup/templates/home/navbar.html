@@ -14,7 +14,7 @@
         
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 {% for brands in category.brands.all%}
-                    <li><a class="dropdown-item" href="#">{{ brands.title}}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'category:product_brands' brands.slug category.slug %}">{{ brands.title}}</a></li>
                 {% endfor %}
             </ul>
         </div>

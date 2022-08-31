@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'css/deals.css' %}">
+{% endblock %}
 {% block content %}
     <div class="position-relative" style="top: 70px;">
         {% include 'home/carousel.html' %}

@@ -1,15 +1,51 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% load range_iterator %}
+{% block css %} 
+    <link rel="stylesheet" href="{% static 'css/deals.css' %}">
+{% endblock %}
 {% block content %}
-    {% for category in products %}
-        {% for product in category.productsCategory.all %}
-        <br>
-        <br>
-        <br>
-        {{category.title}}
-            <div class="d-flex">
-                {{ product.name }}
+<div class="position-relative mt-md-5 mb-md-5 p-0" style="top: 70px;">
+    <div class="row me-0">
+        {% include 'category/order_by.html' %}
+        <div class="col-lg-9 col-xl-10">
+            <div class="card border-0">
+                <div class="card-body p-0">
+                    <div class="row m-auto me-0">
+                        {% for category in products %}
+                            {% for product in category.productsCategory.all %}
+                                <div class="col-md-6 col-lg-4 col-xl-3 mb-3 mb-lg-none d-flex align-items-stretch">
+                                    <div class="p-3 shadow rounded m-auto m-md-0" style="min-height: 100%;">
+                                        <div class="d-flex justify-content-center">
+                                            <img class="img-fluid" src="{{ product.image.url }}" />
+                                        </div>
+                                        
+                                        <h3>{{ product.name }}</h3>
+                                        <div class="text-primary d-flex justify-content-start align-items-center">
+                                            <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
+                                            <div><strong>0.00</strong></div>
+                                        </div>
+                                        <fieldset class="rating">
+                                            {% with product.raiting|floatformat as star %}
+                                                {% for i in 6|times %}
+                                                    {% if i|floatformat <= star %}
+                                                        <input type="radio"  name="rating" checked/>
+                                                        <label class = "full" ></label>
+                                                    {% else %}
+                                                        <input type="radio"  name="rating" />
+                                                        <label class = "full" ></label>
+                                                    {% endif%}
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-    {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}

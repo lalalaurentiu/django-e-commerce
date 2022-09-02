@@ -77,28 +77,28 @@
                                         <h3>{{ product.name }}</h3>
                                         <div class="accordion" id="{{ product.slug }}">
                                             <div class="accordion-item">
-                                            <h2 class="accordion-header" id="{{ product.slug }}_headingOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{ product.slug }}_collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Description
-                                                </button>
-                                            </h2>
-                                            <div id="{{ product.slug }}_collapseOne" class="accordion-collapse collapse show" aria-labelledby="{{ product.slug }}_headingOne" data-bs-parent="#{{ product.slug }}">
-                                                <div class="accordion-body">
-                                                    {{ product.description }}
+                                                <h2 class="accordion-header" id="{{ product.slug }}_headingOne">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{ product.slug }}_collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Description
+                                                    </button>
+                                                </h2>
+                                                <div id="{{ product.slug }}_collapseOne" class="accordion-collapse collapse show" aria-labelledby="{{ product.slug }}_headingOne" data-bs-parent="#{{ product.slug }}">
+                                                    <div class="accordion-body">
+                                                        {{ product.description }}
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                             <div class="accordion-item">
-                                            <h2 class="accordion-header" id="{{ product.slug }}_headingTwo">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ product.slug }}_collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Detail
-                                                </button>
-                                            </h2>
-                                            <div id="{{ product.slug }}_collapseTwo" class="accordion-collapse collapse" aria-labelledby="{{ product.slug }}_headingTwo" data-bs-parent="#{{ product.slug }}">
-                                                <div class="accordion-body">
-                                                    {{ product.details }}
+                                                <h2 class="accordion-header" id="{{ product.slug }}_headingTwo">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ product.slug }}_collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Detail
+                                                    </button>
+                                                </h2>
+                                                <div id="{{ product.slug }}_collapseTwo" class="accordion-collapse collapse" aria-labelledby="{{ product.slug }}_headingTwo" data-bs-parent="#{{ product.slug }}">
+                                                    <div class="accordion-body">
+                                                        {{ product.details }}
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
                                         <div class="text-primary d-flex justify-content-start align-items-center">

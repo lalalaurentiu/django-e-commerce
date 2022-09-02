@@ -1,4 +1,5 @@
 from django.db import models 
+from django.urls import reverse 
 
 # change 
 # from django.utils.translation import ugettext as _ 
@@ -50,6 +51,9 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('category:product',  args=[self.slug])
 
     def save(self, *args, **kwargs):
         self.slug = self.name.replace(" ", "_")

@@ -30,7 +30,8 @@ def products_by_brands(request, category_brand, category_slug):
 
 def product(request, product_slug):
     template = "category/product.html"
-    product = get_object_or_404(Products, slug=product_slug)
+    products = Products.objects.prefetch_related("productDetails")
+    product = get_object_or_404(products, slug=product_slug)
 
     context = {
         "product":product

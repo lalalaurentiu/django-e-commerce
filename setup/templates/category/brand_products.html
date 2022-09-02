@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load range_iterator %}
+{% load tags %}
 {% block css %} 
     <link rel="stylesheet" href="{% static 'css/deals.css' %}">
 {% endblock %}
@@ -25,17 +25,19 @@
                                         <div><strong>0.00</strong></div>
                                     </div>
                                     <fieldset class="rating">
-                                        {% with product.raiting|floatformat as star %}
-                                            {% for i in 6|times %}
-                                                {% if i|floatformat <= star %}
-                                                    <input type="radio"  name="rating" checked/>
-                                                    <label class = "full" ></label>
-                                                {% else %}
-                                                    <input type="radio"  name="rating" />
-                                                    <label class = "full" ></label>
-                                                {% endif%}
-                                            {% endfor %}
-                                        {% endwith %}
+                                        {% for raiting in product.productRaiting.all %}
+                                            {% with raiting.raiting|floatformat as star %}
+                                                {% for i in 6|times %}
+                                                    {% if i|floatformat <= star %}
+                                                        <input type="radio"  name="rating" checked/>
+                                                        <label class = "full" ></label>
+                                                    {% else %}
+                                                        <input type="radio"  name="rating" />
+                                                        <label class = "full" ></label>
+                                                    {% endif%}
+                                                {% endfor %}
+                                            {% endwith %}
+                                        {% endfor %}
                                     </fieldset>
                                 </div>
                             </div>

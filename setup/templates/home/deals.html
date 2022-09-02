@@ -1,4 +1,4 @@
-{% load range_iterator %}
+{% load tags %}
 <div class="container-md mt-md-5 mb-md-5 p-0">
     <div class="card border-0">
         <div class="card-header justify-content-center d-flex border">
@@ -51,17 +51,19 @@
                                                     <div><strong>0.00</strong></div>
                                                 </div>
                                                 <fieldset class="rating">
-                                                    {% with product.raiting|floatformat as star %}
-                                                        {% for i in 6|times %}
-                                                            {% if i|floatformat <= star %}
-                                                                <input type="radio"  name="rating" checked/>
-                                                                <label class = "full" ></label>
-                                                            {% else %}
-                                                                <input type="radio"  name="rating" />
-                                                                <label class = "full" ></label>
-                                                            {% endif%}
-                                                        {% endfor %}
-                                                    {% endwith %}
+                                                    {% for raiting in product.productRaiting.all %}
+                                                        {% with raiting.raiting|floatformat as star %}
+                                                            {% for i in 6|times %}
+                                                                {% if i|floatformat <= star %}
+                                                                    <input type="radio"  name="rating" checked/>
+                                                                    <label class = "full" ></label>
+                                                                {% else %}
+                                                                    <input type="radio"  name="rating" />
+                                                                    <label class = "full" ></label>
+                                                                {% endif%}
+                                                            {% endfor %}
+                                                        {% endwith %}
+                                                    {% endfor %}
                                                 </fieldset>
                                             </div>
                                         </div>
@@ -80,17 +82,19 @@
                                             <div><strong>0.00</strong></div>
                                         </div>
                                         <fieldset class="rating">
-                                            {% with product.raiting|floatformat as star %}
-                                                {% for i in 6|times %}
-                                                    {% if i|floatformat <= star %}
-                                                        <input type="radio"  name="rating" checked/>
-                                                        <label class = "full" ></label>
-                                                    {% else %}
-                                                        <input type="radio"  name="rating" />
-                                                        <label class = "full" ></label>
-                                                    {% endif%}
-                                                {% endfor %}
-                                            {% endwith %}
+                                            {% for raiting in product.productRaiting.all %}
+                                                {% with raiting.raiting|floatformat as star %}
+                                                    {% for i in 6|times %}
+                                                        {% if i|floatformat <= star %}
+                                                            <input type="radio"  name="rating" checked/>
+                                                            <label class = "full" ></label>
+                                                        {% else %}
+                                                            <input type="radio"  name="rating" />
+                                                            <label class = "full" ></label>
+                                                        {% endif%}
+                                                    {% endfor %}
+                                                {% endwith %}
+                                            {% endfor %}
                                         </fieldset>
                                     </div>
                                 </div>

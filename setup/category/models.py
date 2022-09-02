@@ -71,4 +71,4 @@ class ProductRaiting(models.Model):
     raiting = models.DecimalField(default = 5, max_digits=2, decimal_places=1)
 
     def __str__(self):
-        return self.product.name + " " + self.raiting
+        return self.product.name + " " + str(self.raiting)

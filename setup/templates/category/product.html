@@ -28,7 +28,16 @@
         <div class="container my-3">
             <div class="row border">
                 <div class="col-md-6 d-flex justify-content-center align-items-center">
-                    <img src="{{ product.image.url }}" class="card-img-top img-fluid my-1" alt="{{ product.name }}" style="max-width: 375px;">
+                    {% if product.productImages.all|len != 0 %}
+                        {% for image in product.productImages.all %}
+                            {% if forloop.first %}
+                                <img src="{{ image.image.url }}" class="card-img-top img-fluid my-1" alt="{{ product.name }}" style="max-width: 375px;">
+                            {% endif %}
+                        {% endfor%}
+                    {% else %}
+                        <img class="card-img-top img-fluid my-1" src="{% static 'Images/No_image.jpg' %}" alt="No Image"/>
+                    {% endif%}
+                    
                 </div>
                 <div class="col-md-6 my-3">
                     <h3>{{ product.name }}</h3>
@@ -101,7 +110,7 @@
                             style ="
                                 height: 150px;
                                 width: 150px; 
-                                background-image: url('https://www.apautomotive.com.au/wp-content/uploads/2019/04/product-placeholder.jpg');
+                                background-image: url({% static 'Images/No_image.jpg' %});
                                 background-repeat: no-repeat;
                                 background-size: 150px;
                                 background-position: center;">
@@ -150,7 +159,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                             style ="
                                 height: 150px;
                                 width: 150px; 
-                                background-image: url('https://www.apautomotive.com.au/wp-content/uploads/2019/04/product-placeholder.jpg');
+                                background-image: url('{% static 'Images/No_image.jpg' %}');
                                 background-repeat: no-repeat;
                                 background-size: 150px;
                                 background-position: center;">

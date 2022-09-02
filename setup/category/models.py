@@ -42,11 +42,9 @@ class Products(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE, related_name="productsCategory")
     name = models.TextField(max_length=100)
     description = models.TextField()
-    image = models.ImageField(upload_to = "images/Products")
     price = models.DecimalField(max_digits = 5, decimal_places = 2)
     discount = models.FloatField(default=0)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    
 
     def __str__(self):
         return self.name
@@ -72,3 +70,10 @@ class ProductRaiting(models.Model):
 
     def __str__(self):
         return self.product.name + " " + str(self.raiting)
+
+class ProductImages(models.Model):
+    product = models.ForeignKey(Products,on_delete=models.CASCADE, related_name="productImages")
+    image = models.ImageField(upload_to = "images/Products")
+
+    def __str__(self):
+        return self.product.name + " " + "Image"

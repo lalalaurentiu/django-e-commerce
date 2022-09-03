@@ -1,5 +1,24 @@
 {% load static %}
 {% load tags %}
+
+<style>
+    .accordion-item {
+        border: none;
+    }
+    .accordion-button:focus{
+    z-index: 3;
+    outline: 0;
+    box-shadow: none;
+    }
+    .accordion-button:not(.collapsed) {
+    color: black;
+    background-color: white;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+    @media screen {
+        
+    }
+}
+</style>
 <div class="container-md mt-md-5 mb-md-5 p-0">
     <div class="card border-0">
         <div class="card-header justify-content-center d-flex border">
@@ -30,8 +49,8 @@
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
                                             <div class="w-100">
-                                                <h3>{{ product.name }}</h3>
-                                                <div class="accordion" id="{{ product.slug }}">
+                                                <h3 class="my-3">{{ product.name }}</h3>
+                                                <div class="accordion d-none d-md-block" id="{{ product.slug }}">
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header" id="{{ product.slug }}_headingOne">
                                                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{ product.slug }}_collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -52,14 +71,23 @@
                                                         </h2>
                                                         <div id="{{ product.slug }}_collapseTwo" class="accordion-collapse collapse" aria-labelledby="{{ product.slug }}_headingTwo" data-bs-parent="#{{ product.slug }}">
                                                             <div class="accordion-body">
-                                                            {{ product.details }}
+                                                                {% if product.productDetails.all|len != 0 %}
+                                                                    {% for detail in product.productDetails.all %}
+                                                                        {{ detail.detail_name }} {{ detail.detail_value }}
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    No details
+                                                                {% endif%}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-primary d-flex justify-content-start align-items-center">
-                                                    <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
-                                                    <div><strong>0.00</strong></div>
+                                                <hr>
+                                                <div class="text-black d-flex justify-content-start align-items-center">
+                                                    <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                                    <a class="ms-3" href="#">
+                                                        <i class="fas fa-shopping-cart text-primary"></i>
+                                                    </a>
                                                 </div>
                                                 <fieldset class="rating">
                                                     {% for raiting in product.productRaiting.all %}
@@ -94,11 +122,13 @@
                                                 <img class="img-fluid" src="{% static 'Images/No_image.jpg' %}" alt="No Image" />
                                             {% endif%}
                                         </div>
-                                        
-                                        <h3>{{ product.name }}</h3>
-                                        <div class="text-primary d-flex justify-content-start align-items-center">
-                                            <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
-                                            <div><strong>0.00</strong></div>
+                                        <hr>
+                                        <h3 class="fs-5 fw-bold">{{ product.name }}</h3>
+                                        <div class="text-black d-flex justify-content-start align-items-center">
+                                            <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                            <a class="ms-3" href="#">
+                                                <i class="fas fa-shopping-cart text-primary"></i>
+                                            </a>
                                         </div>
                                         <fieldset class="rating">
                                             {% for raiting in product.productRaiting.all %}

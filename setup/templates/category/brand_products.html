@@ -26,11 +26,13 @@
                                             <img class="img-fluid" src="{% static 'Images/No_image.jpg' %}" alt="No Image"/>
                                         {% endif%}
                                     </div>
-                                    
-                                    <h3>{{ product.name }}</h3>
-                                    <div class="text-primary d-flex justify-content-start align-items-center">
-                                        <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
-                                        <div><strong>0.00</strong></div>
+                                    <hr>
+                                    <h3 class="fs.2 fw-bold">{{ product.name }}</h3>
+                                    <div class="text-black d-flex justify-content-start align-items-center">
+                                        <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                        <a class="ms-3" href="#">
+                                            <i class="fas fa-shopping-cart text-primary"></i>
+                                        </a>
                                     </div>
                                     <fieldset class="rating">
                                         {% for raiting in product.productRaiting.all %}

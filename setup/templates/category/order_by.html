@@ -1,8 +1,8 @@
 <div class="col-lg-3 col-xl-2 border-end border-bottom mb-2 p-xl-0">
     <div class="row m-auto">
         <div class="col-7 col-md-4 col-lg-12 mb-5">
-            <p class="fs-3">Category</p>
-            <ul class="list-group list-group-flush">
+            <p class="fs-5">Category</p>
+            <ul class="list-group list-group-flush" style="max-height: 160px; overflow: auto; ">
                 {% for category in categorys%}
                     <li class="list-group-item">
                         <a class="text-decoration-none text-muted" href="{% url 'category:products_category' category.slug %}">{{ category.title }}</a>
@@ -11,7 +11,7 @@
             </ul>
         </div>
         <div class="col-7 col-md-4 col-lg-12 mb-5">
-            <p class="fs-3">Order by</p>
+            <p class="fs-5">Order by</p>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <a class="text-decoration-none text-muted" href="">Default</a>
@@ -28,7 +28,7 @@
             </ul>
         </div>
         <div class="col-7 col-md-4 col-lg-12 mb-5">
-            <p class="fs-3">Order by Raiting</p>
+            <p class="fs-5">Order by Raiting</p>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex align-items-center justify-content-between p-0">
                     <div class="rating">

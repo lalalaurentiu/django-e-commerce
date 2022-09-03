@@ -19,14 +19,16 @@
     color: black;
     background-color: white;
     box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
-    @media screen {
-        
     }
-}
+    @media only screen and (max-width : 768px) {
+        .border{
+            border: none !important;
+        }
+    }
 </style>
     <div class="position-relative" style="top: 70px;">
         <div class="container my-3">
-            <div class="row border">
+            <div class="row border border-md-0">
                 <div class="col-md-6 d-flex justify-content-center align-items-center">
                     {% if product.productImages.all|len != 0 %}
                         {% for image in product.productImages.all %}
@@ -40,7 +42,7 @@
                     
                 </div>
                 <div class="col-md-6 my-3">
-                    <h3>{{ product.name }}</h3>
+                    <h3 class="my-3">{{ product.name }}</h3>
                     <div class="accordion" id="{{ product.slug }}">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="{{ product.slug }}_headingOne">
@@ -73,25 +75,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-primary d-flex justify-content-start align-items-center">
-                        <div><strong>Price:</strong><strong>{{ product.price }}</strong><strong>LEi</strong></div>
-                        <div><strong>0.00</strong></div>
+                    <div class="text-black d-flex justify-content-start align-items-center">
+                        <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
                     </div>
-                    <fieldset class="rating">
-                        {% for raiting in product.productRaiting.all %}
-                            {% with raiting.raiting|floatformat as star %}
-                                {% for i in 6|times %}
-                                    {% if i|floatformat <= star %}
-                                        <input type="radio"  name="rating" checked/>
-                                        <label class = "full" ></label>
-                                    {% else %}
-                                        <input type="radio"  name="rating" />
-                                        <label class = "full" ></label>
-                                    {% endif%}
-                                {% endfor %}
-                            {% endwith %}
-                        {% endfor %}
-                    </fieldset>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <fieldset class="rating">
+                            {% for raiting in product.productRaiting.all %}
+                                {% with raiting.raiting|floatformat as star %}
+                                    {% for i in 6|times %}
+                                        {% if i|floatformat <= star %}
+                                            <input type="radio"  name="rating" checked/>
+                                            <label class = "full" ></label>
+                                        {% else %}
+                                            <input type="radio"  name="rating" />
+                                            <label class = "full" ></label>
+                                        {% endif%}
+                                    {% endfor %}
+                                {% endwith %}
+                            {% endfor %}
+                        </fieldset>
+                        <a class="ms-3 btn btn-primary" href="#">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </a>
+                    </div>
                 </div>
               </div>
               <div class="my-3">

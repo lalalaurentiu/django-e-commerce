@@ -31,6 +31,10 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
+#cart session
+CART_SESSION_ID = 'cart'
+SITE_ID = 1
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     #django apps
     "home",
     "category",
+    "orders",
 
     # packange
     'bootstrap5',
@@ -72,7 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'category.context_processors.items'
+                'category.context_processors.items',
+                'orders.context_processors.cart'
             ],
         },
     },

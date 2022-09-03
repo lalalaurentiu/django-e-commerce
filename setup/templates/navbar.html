@@ -1,33 +1,88 @@
+{% load tags %}
 <nav id="headernav" class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom">
-    <div class="container-lg bg-white flex-row">
-      <button id="sidebarbutton" class="btn btn-light text-primary d-md-none bg-white">
-        <i class="fas fa-bars"></i>
-      </button>
-      <a class="navbar-brand col-lg-8" href="#">e-commerce</a>
-      <button class="btn btn-light text-primary d-lg-none bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse col-lg-4" id="navbarSupportedContent">
-        <ul class="navbar-nav m-auto mb-2 mb-lg-0 w-100 justify-content-end">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-user text-primary"></i>
-              Profile
-            </a>
-            <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-shopping-cart text-primary"></i>
-              Cart
-            </a>
-          </li>
+  <div class="container-lg bg-white flex-row">
+    <button id="sidebarbutton" class="btn btn-light text-primary d-md-none bg-white">
+      <i class="fas fa-bars"></i>
+    </button>
+    <a class="navbar-brand col-lg-8" href="{% url 'home:home' %}">e-commerce</a>
+    <button class="btn btn-light text-primary d-lg-none bg-white" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse col-lg-4" id="navbarSupportedContent">
+      <ul class="navbar-nav m-auto mb-2 mb-lg-0 w-100 justify-content-end">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-user text-primary"></i>
+            Profile
+          </a>
+          <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item d-flex">
+          
+          <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <i class="fas fa-shopping-cart text-primary"></i>
+            {% if cart %}
+              <bold class="text-white px-1 bg-danger rounded">
+                {% for item in cart %}
+                  {% if forloop.first %}
+                    {{ item|cartlen}}
+                  {% endif %}
+                {% endfor %}
+              </bold>
+            {% endif %}
+            Cart
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush">
+          {% for item in cart %}
+            {% with product=item.product %}
+            <li class="list-group-item">
+              <div class="d-md-flex justify-content-between text-center">
+                <div class="d-none d-md-block">
+                  {{ forloop.counter }}
+                </div>
+                <div>
+                  {{ product.name }}
+                </div>
+                <div>
+                  {{ item.price }} Lei
+                </div>
+                <a href="#">
+                  <i class="fas fa-trash "></i>
+                </a>
+              </div>
+            </li>
+            
+            {% endwith %}
+          {% endfor %}
         </ul>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Checkout</button>
+      </div>
     </div>
-  </nav>
+  </div>
+</div>

@@ -1,7 +1,4 @@
-from .models import (
-    Category,
-    Products
-)
+from .models import *
 
 def items(request):
     categorys = Category.objects.all()

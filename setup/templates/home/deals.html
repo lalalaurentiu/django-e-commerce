@@ -14,14 +14,11 @@
     color: black;
     background-color: white;
     box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
-    @media screen {
-        
     }
-}
 </style>
 <div class="container-md mt-md-5 mb-md-5 p-0">
     <div class="card border-0">
-        <div class="card-header justify-content-center d-flex border">
+        <div class="card-header justify-content-center d-flex border-0 shadow">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item"><a class="nav-link active" href="#">All Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Second Item</a></li>
@@ -34,17 +31,21 @@
                     <div class="row">
                         {% for product in products %}
                             {% if forloop.first %}
-                                <div class="col-md-12 border p-3 mt-3 mb-3 shadow rounded">
+                                <div class="col-md-12 p-3 mt-3 mb-3 shadow rounded">
                                     <div class="row">
                                         <div class="col-lg-6 d-flex align-items-center justify-content-center">
                                             {% if product.productImages.all|len != 0 %}
                                                 {% for image in product.productImages.all %}
                                                     {% if forloop.first %}
-                                                        <img class="img-fluid" src="{{ image.image.url }}" alt="{{ product.name }}"/>
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            <img class="img-fluid" src="{{ image.image.url }}" alt="{{ product.name }}"/>
+                                                        </a>
                                                     {% endif %}
                                                 {% endfor%}
                                             {% else %}
-                                                <img class="img-fluid" src="{% static 'Images/No_image.jpg' %}" alt="No Image"/>
+                                                <a href="{{ product.get_absolute_url }}">
+                                                    <img class="img-fluid" src="{% static 'Images/No_image.jpg' %}" alt="No Image"/>
+                                                </a>
                                             {% endif%}
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
@@ -85,9 +86,13 @@
                                                 <hr>
                                                 <div class="text-black d-flex justify-content-start align-items-center">
                                                     <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
-                                                    <a class="ms-3" href="#">
-                                                        <i class="fas fa-shopping-cart text-primary"></i>
-                                                    </a>
+                                                    <form action="{% url 'cart:cart_add' product.id %}" method='post'>
+                                                        {{ add_to_cart }}
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="ms-3" style="background-color: white;border:none;">
+                                                            <i class="fas fa-cart-plus text-primary"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                                 <fieldset class="rating">
                                                     {% for raiting in product.productRaiting.all %}
@@ -115,20 +120,28 @@
                                             {% if product.productImages.all|len != 0 %}
                                                 {% for image in product.productImages.all %}
                                                     {% if forloop.first %}
-                                                        <img class="img-fluid" src="{{ image.image.url }}" />
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            <img class="img-fluid" src="{{ image.image.url }}" />
+                                                        </a>    
                                                     {% endif %}
                                                 {% endfor%}
                                             {% else %}
-                                                <img class="img-fluid" src="{% static 'Images/No_image.jpg' %}" alt="No Image" />
+                                                <a href="{{ product.get_absolute_url }}">
+                                                    <img class="img-fluid" src="{% static 'Images/No_image.jpg' %}" alt="No Image" />
+                                                </a>
                                             {% endif%}
                                         </div>
                                         <hr>
-                                        <h3 class="fs-5 fw-bold">{{ product.name }}</h3>
+                                        <h3 class="fs-5">{{ product.name }}</h3>
                                         <div class="text-black d-flex justify-content-start align-items-center">
                                             <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
-                                            <a class="ms-3" href="#">
-                                                <i class="fas fa-shopping-cart text-primary"></i>
-                                            </a>
+                                            <form action="{% url 'cart:cart_add' product.id %}" method='post'>
+                                                {{ add_to_cart }}
+                                                {% csrf_token %}
+                                                <button type="submit" class="ms-3" style="background-color: white;border:none;">
+                                                    <i class="fas fa-shopping-cart text-primary"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                         <fieldset class="rating">
                                             {% for raiting in product.productRaiting.all %}

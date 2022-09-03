@@ -26,8 +26,6 @@ def products_by_brands(request, category_brand, category_slug):
     }
 
     return render(request, template, context)
-    # except:
-    #     raise Http404
 
 def product(request, product_slug):
     template = "category/product.html"

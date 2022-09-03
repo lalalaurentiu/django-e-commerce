@@ -8,5 +8,9 @@ def range_iterator(value):
 
 @register.filter(name="len")
 def query_len(query):
-    print(query)
     return len(query)
+
+@register.filter(name="cartlen")
+def cart_len(cart):
+    print(len(cart))
+    return len(cart)

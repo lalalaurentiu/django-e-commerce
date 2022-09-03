@@ -65,9 +65,21 @@
                             <div id="{{ product.slug }}_collapseTwo" class="accordion-collapse collapse" aria-labelledby="{{ product.slug }}_headingTwo" data-bs-parent="#{{ product.slug }}">
                                 <div class="accordion-body">
                                     {% if product.productDetails.all|len != 0 %}
-                                        {% for detail in product.productDetails.all %}
-                                            {{ detail.detail_name }} {{ detail.detail_value }}
-                                        {% endfor %}
+                                        <ul class="list-group list-group-flush" style="max-height: 600px; overflow:auto;">
+                                            {% for detail in product.productDetails.all %}
+                                            
+                                                <li class="list-group-item border-0 border-bottom">
+                                                    <div class="row">
+                                                        <div class="mb-2 col-md-6">
+                                                            {{ detail.detail_name }}
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            {{ detail.detail_value }}
+                                                        </div>
+                                                    </div> 
+                                                </li>
+                                            {% endfor %}
+                                        </ul>    
                                     {% else %}
                                         No details
                                     {% endif%}
@@ -94,10 +106,14 @@
                                 {% endwith %}
                             {% endfor %}
                         </fieldset>
-                        <a class="ms-3 btn btn-primary" href="#">
-                            <i class="fas fa-shopping-cart"></i>
-                            Add to Cart
-                        </a>
+                        <form action="{% url 'cart:cart_add' product.id %}" method='post'>
+                            {{ add_to_cart }}
+                            {% csrf_token %}
+                            <button type="submit" class="ms-3 btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                        </form>
                     </div>
                 </div>
               </div>

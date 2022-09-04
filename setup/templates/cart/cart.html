@@ -1,1 +1,88 @@
 {% extends 'base.html' %}
+{% load tags %}
+
+{% block content %}
+    <div class="container position-relative"  style="top: 70px; min-height: 100vh;">
+        {% if cart %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Ammount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                            <tr>
+                                <th class="align-middle">
+                                    {{ forloop.counter }} 
+                                </th>
+                                <th>
+                                    {% if product.productImages.all|len != 0 %}
+                                        {% for image in product.productImages.all %}
+                                            {% if forloop.first %}
+                                                <img class="img-fluid" src="{{ image.image.url }}" alt="{{ product.name }}" style="max-width: 150px;">
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </th>
+                                <td class="align-middle">{{ product.name }}</td>
+                                <td class="align-middle">{{ product.price }}</td>
+                                <td class="align-middle">
+                                    <div class="d-flex align-items-center">
+                                        {{ item.quantity }}
+                                        <div class="d-flex flex-row-reverse ">
+                                            <form action="{% url 'cart:cart_add' product.id %}" method='post'>
+                                                {{ add_to_cart }}
+                                                {% csrf_token %}
+                                                <button type="submit" class="cart-button btn btn-primary" style="border-bottom-right-radius: 20px;
+                                                                                                                    border-top-right-radius: 20px;
+                                                                                                                    border-bottom-left-radius: 0;
+                                                                                                                    border-top-left-radius: 0;
+                                                                                                                    ">
+                                                    <i class="fas fa-chevron-right "></i>
+                                                </button>
+                                            </form>
+                                            <form action="{% url 'cart:cart_decrease' product.id %}" method='post'>
+                                                {{ add_to_cart }}
+                                                {% csrf_token %}
+                                                <button type="submit" class="ms-3 cart-button btn btn-primary" style="border-bottom-left-radius: 20px;
+                                                                                                                    border-top-left-radius: 20px;
+                                                                                                                    border-bottom-right-radius: 0;
+                                                                                                                    border-top-right-radius: 0;
+                                                                                                                    ">
+                                                    <i class="fas fa-chevron-left "></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle">{{ item.price }}</td>
+                            </tr>
+                            {% endwith %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end my-3">
+                <div class="fs-4 fw-semibold mx-2">
+                    Total: {{ cart.get_total_price }} Lei
+                </div>
+                <button class="btn btn-primary">
+                    Complet Purchase
+                </button>
+            </div>
+        {% else %} 
+        <div class="text-center">
+            No Products
+        </div>
+        {% endif %}
+    </div>
+    
+{% endblock %}

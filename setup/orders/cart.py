@@ -55,11 +55,25 @@ class Cart(object):
             self.cart[product_id]['quantity'] += quantity
         self.save()
 
+    def decrease(self, product):
+        """
+        Decrease item count
+        """
+        product_id = str(product.id)
+
+        if product_id in self.cart:
+            self.cart[product_id]['quantity'] -= 1
+            if self.cart[product_id]['quantity'] <= 0:
+                self.remove(product)
+            self.save()
+
+
     def save(self):
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
 
     def remove(self, product):
+        
         """
         Remove a product from the cart.
         """

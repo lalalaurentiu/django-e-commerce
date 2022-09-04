@@ -32,13 +32,9 @@
           <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <i class="fas fa-shopping-cart text-primary"></i>
             {% if cart %}
-              <bold class="text-white px-1 bg-danger rounded">
-                {% for item in cart %}
-                  {% if forloop.first %}
-                    {{ item|cartlen}}
-                  {% endif %}
-                {% endfor %}
-              </bold>
+              <span class="text-white mx-1 bg-danger rounded text-center" style="padding-left: 5px;">
+                {{ cart.cart_products }}
+              </span>
             {% endif %}
             Cart
           </a>
@@ -55,28 +51,35 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <ul class="list-group list-group-flush">
-          {% for item in cart %}
-            {% with product=item.product %}
-            <li class="list-group-item">
-              <div class="d-md-flex justify-content-between text-center">
-                <div class="d-none d-md-block">
-                  {{ forloop.counter }}
+        <ul id="cart_list" class="list-group list-group-flush">
+          {% if cart %}
+            {% for item in cart %}
+              {% with product=item.product %}
+              <li class="list-group-item">
+                <div class="d-md-flex justify-content-between text-center">
+                  <div class="d-none d-md-block">
+                    {{ forloop.counter }}
+                  </div>
+                  <div>
+                    {{ product.name }}
+                  </div>
+                  <div>
+                    {{ item.price }} Lei
+                  </div>
+                  <form action='{% url "cart:cart_remove" product.id %}' method="post">
+                    <button class="cart-remove-product" type="submit" style="background-color: white;border:none;">
+                      <i class="fas fa-trash "></i>
+                    </button>
+                    {% csrf_token %}
+                  </form>
                 </div>
-                <div>
-                  {{ product.name }}
-                </div>
-                <div>
-                  {{ item.price }} Lei
-                </div>
-                <a href="#">
-                  <i class="fas fa-trash "></i>
-                </a>
-              </div>
-            </li>
-            
-            {% endwith %}
-          {% endfor %}
+              </li>
+              
+              {% endwith %}
+            {% endfor %}
+          {% else %}
+          <li class="list-group-item">No Products</li>
+          {% endif %}
         </ul>
       </div>
       <div class="modal-footer">

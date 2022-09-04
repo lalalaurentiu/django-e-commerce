@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from category.models import Products
 from .cart import Cart
 from .forms import CartAddProductForm
+from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
 
 def cart(request):
     template = "cart/cart.html"
@@ -11,7 +12,7 @@ def cart(request):
 
 
 
-
+@requires_csrf_token
 @require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
@@ -31,12 +32,5 @@ def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Products, id=product_id)
     cart.remove(product)
-    return redirect('cart:cart_detail')
+    return HttpResponse(status = 204)
 
-
-def cart_detail(request):
-    cart = Cart(request)
-    for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
-                                                                   'override': True})
-    return render(request, 'cart/view.html', {'cart': cart})

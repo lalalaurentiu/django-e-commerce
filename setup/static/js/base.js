@@ -30,3 +30,20 @@ document.addEventListener("scroll", e =>{
         headernav.style.maxHeight = "70px";
     };
 });
+
+const cart_buttons = [...document.querySelectorAll(".cart-button")];
+const cart_remove_buttons = [...document.querySelectorAll(".cart-remove-product")]
+
+function listener_buttons (list){
+    list.forEach(element => {
+        element.addEventListener("click", () =>{
+            setTimeout( () =>{
+                location.reload(true)
+            }, 500);
+            
+        });
+    });
+};
+
+listener_buttons(cart_buttons);
+listener_buttons(cart_remove_buttons);

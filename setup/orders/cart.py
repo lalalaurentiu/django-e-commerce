@@ -38,7 +38,7 @@ class Cart(object):
         """
         Count all items in the cart.
         """
-        print(sum(item['quantity'] for item in self.cart.values()))
+
         return sum(item['quantity'] for item in self.cart.values())
 
     def add(self, product, quantity=1, override_quantity=False):
@@ -75,3 +75,8 @@ class Cart(object):
 
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+    
+    def cart_products(self):
+        product_ids = self.cart.keys()
+        products = Products.objects.filter(id__in=product_ids).values_list()
+        return len(products)

@@ -84,7 +84,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="{% url 'cart:cart' %}" type="button" class="btn btn-primary">Checkout</a>
+        {% if cart %}
+          <a href="{% url 'cart:cart' %}" type="button" class="btn btn-primary">Checkout</a>
+        {% endif %}
       </div>
     </div>
   </div>

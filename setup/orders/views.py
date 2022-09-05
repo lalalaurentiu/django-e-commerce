@@ -20,6 +20,11 @@ def cart(request):
     }
     return render(request, template, context)
 
+def checkout(request):
+    template = "cart/checkout.html"
+
+    return render(request, template)
+
 
 
 @requires_csrf_token

@@ -1,10 +1,12 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from category.models import Products
 
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
+    phone_number = PhoneNumberField(default = "+40")
     address = models.CharField(max_length=250)
     address2 = models.CharField(max_length=250, null=True, blank=True)
     postal_code = models.CharField(max_length=20)

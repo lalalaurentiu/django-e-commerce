@@ -2,6 +2,10 @@ let regions_data = JSON.parse(document.getElementById('regions_data').textConten
 let towns_data = JSON.parse(document.getElementById('towns_data').textContent);
 
 let regions = document.getElementById("regions");
+let default_value_region = document.createElement("option");
+default_value_region.innerHTML = "Choose..."
+default_value_region.setAttribute("value", "")
+regions.append(default_value_region)
 
 for (item of regions_data ){
     let region = document.createElement("option");
@@ -10,6 +14,10 @@ for (item of regions_data ){
 };
 
 let towns = document.getElementById("towns");
+let default_value_towns = document.createElement("option");
+default_value_towns.innerHTML = "Choose..."
+default_value_towns.setAttribute("value", "")
+towns.append(default_value_towns)
 
 let check_button = document.getElementById("check")
 
@@ -29,4 +37,19 @@ regions.addEventListener("change", (event) => {
             });
         };
     };      
+});
+
+let payment_available = [
+    document.getElementById("id_paiment_method_0"),
+    document.getElementById("id_paiment_method_1"),
+    document.getElementById("id_paiment_method_2"),
+    document.getElementById("id_paiment_method_3"),
+]
+
+payment_available.forEach((element, index) =>{
+    if (index == 0){
+        element.setAttribute("checked", "");
+    } else {
+        element.setAttribute("disabled", "");
+    };
 });

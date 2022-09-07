@@ -3,8 +3,10 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from category.models import Products
 from .cart import Cart
-from .forms import CartAddProductForm, CartDecreaseProductForm
+from .forms import *
 from django.views.decorators.csrf import requires_csrf_token
+from django.views.generic import TemplateView
+
 
 def cart(request):
     cart = Cart(request)
@@ -20,12 +22,26 @@ def cart(request):
     }
     return render(request, template, context)
 
-def checkout(request):
+class Checkout(TemplateView):
     template = "cart/checkout.html"
+    checkout = CheckoutForm()
+    context = {
+        "form":checkout
+    }
+    def get(self, request):
+        return render(request, self.template, self.context)
 
-    return render(request, template)
-
-
+    def post(self, request):
+        checkout = CheckoutForm(request.POST)
+        if request.method == "POST":
+            
+            if checkout.is_valid():
+                checkout.save()
+                return redirect("home:home")          
+        else:
+            self.context["form"] = checkout
+        return redirect("cart:checkout")
+              
 
 @requires_csrf_token
 @require_POST

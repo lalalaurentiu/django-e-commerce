@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block content %}
+
+<style>
+  #id_phone_number_0{
+    width: 30%;
+    margin-right: 10px;
+  }
+</style>
 <div class="container position-relative my-3" style="top: 70px;">
     <div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">
@@ -44,8 +51,8 @@
             <span class="text-success">−$5</span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$20</strong>
+            <span>Total</span>
+            <strong>{{ cart.get_total_price }} Lei</strong>
           </li>
         </ul>
         <form class="card p-2">
@@ -57,68 +64,76 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Billing address</h4>
-        <form class="needs-validation" novalidate="">
+        <form method="post" class="needs-validation">
+          {% csrf_token %}
           <div class="row g-3">
             <div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+              <label for="id_first_name" class="form-label">First name</label>
+              {{ form.first_name }}
               <div class="invalid-feedback">
-                Valid first name is required.
+                {{ form.first_name.errors }}
               </div>
             </div>
 
             <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+              <label for="id_last_name" class="form-label">Last name</label>
+              {{ form.last_name }}
               <div class="invalid-feedback">
                 Valid last name is required.
               </div>
             </div>
 
             <div class="col-12">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <label for="id_email" class="form-label">Email</label>
+              {{ form.email }}
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
             </div>
 
             <div class="col-12">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+              <label for="id_phone_number_1" class="form-label">Phone Number</label>
+              <div class="d-flex justify-content-between">
+                {{ form.phone_number }}
+              </div>
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="id_address" class="form-label">Address</label>
+              {{ form.address }}
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
             </div>
 
             <div class="col-12">
-              <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+              <label for="id_address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
+              {{ form.address2 }}
             </div>
 
             <div class="col-md-5">
-              <label for="region" class="form-label">Region</label>
-              <select class="form-select" id="regions" required="">
-                <option value="">Choose...</option>
-              </select>
+              <label for="regions" class="form-label">Region</label>
+              {{ form.region }}
               <div class="invalid-feedback">
                 Please select a valid country.
               </div>
             </div>
 
             <div class="col-md-4">
-              <label for="town" class="form-label">Town</label>
-              <select class="form-select selectpicker" id="towns" disabled required="">
-                <option value="">Choose...</option>
-              </select>
+              <label for="towns" class="form-label">Town</label>
+              {{ form.city }}
               <div class="invalid-feedback">
-                Please provide a valid state.
+                {{ form.city.errors }}
               </div>
             </div>
 
             <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required="">
+              <label for="id_postal_code" class="form-label">Zip</label>
+              <!-- <input type="text" class="form-control" id="zip" placeholder="" required=""> -->
+              {{ form.postal_code }}
               <div class="invalid-feedback">
                 Zip code required.
               </div>
@@ -142,27 +157,18 @@
           <h4 class="mb-3">Payment</h4>
 
           <div class="my-3">
+            {% for field in form.paiment_method %}
             <div class="form-check">
-                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
-                <label class="form-check-label" for="credit">Cash on delivery</label>
+                {{ field }}
             </div>
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" disabled required="">
-              <label class="form-check-label" for="credit" disabled>Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" disabled required="">
-              <label class="form-check-label" for="debit" disabled>Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" disabled required="">
-              <label class="form-check-label" for="paypal" disabled>PayPal</label>
-            </div>
+            {% endfor %}
           </div>
 
           <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+          
+          <div class="w-100">
+            <button class="btn btn-primary btn-lg" type="submit">Place the order</button>
+          </div>
         </form>
       </div>
     </div>

@@ -1,8 +1,14 @@
-let sidebarbutton = document.getElementById("sidebarbutton");
-
-function closeElemen (parrent, element){
-    console.log("")
+window.onload = function (){
+    let alert = document.getElementById("message");
+    console.log(alert)
+    if (alert !== null){
+        setTimeout(() =>{
+            alert.classList.add("show-messages")
+        }, 250);
+    };
 };
+
+let sidebarbutton = document.getElementById("sidebarbutton");
 
 sidebarbutton.addEventListener("click", () =>{
     let sidebar = document.getElementById("sidebar");
@@ -47,3 +53,5 @@ function listener_buttons (list){
 
 listener_buttons(cart_buttons);
 listener_buttons(cart_remove_buttons);
+
+

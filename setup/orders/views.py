@@ -6,6 +6,7 @@ from .cart import Cart
 from .forms import *
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import TemplateView
+from django.contrib import messages
 
 
 def cart(request):
@@ -37,6 +38,7 @@ class Checkout(TemplateView):
             
             if checkout.is_valid():
                 checkout.save()
+                messages.success(request, "Your order has been placed" )
                 return redirect("home:home")          
         else:
             self.context["form"] = checkout

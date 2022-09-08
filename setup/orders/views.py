@@ -7,6 +7,7 @@ from .forms import *
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import TemplateView
 from django.contrib import messages
+from .models import *
 
 
 def cart(request):
@@ -27,23 +28,35 @@ class Checkout(TemplateView):
     template = "cart/checkout.html"
     checkout = CheckoutForm()
     context = {
-        "form":checkout
+        "form":checkout,
     }
     def get(self, request):
         return render(request, self.template, self.context)
 
     def post(self, request):
-        checkout = CheckoutForm(request.POST)
+        cart = Cart(request)
+        checkoutform = CheckoutForm(request.POST)
         if request.method == "POST":
             
-            if checkout.is_valid():
-                checkout.save()
+            if checkoutform.is_valid():
+                checkout = checkoutform.save()
+                
+                for item in cart:
+                    OrderItem.objects.create(
+                        order_id = checkout.pk,
+                        product_id = item["product"].id,
+                        quantity = item["quantity"],
+                        price = item["quantity"] * item["product"].price
+                        )
+                cart.clear()
                 messages.success(request, "Your order has been placed" )
                 return redirect("home:home")          
+            else:
+                self.context["form"] = checkoutform
+                return render(request, self.template, self.context)
         else:
-            self.context["form"] = checkout
-        return redirect("cart:checkout")
-              
+            self.context["form"] = CheckoutForm()
+               
 
 @requires_csrf_token
 @require_POST

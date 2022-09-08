@@ -5,6 +5,8 @@ let regions = document.getElementById("regions");
 let default_value_region = document.createElement("option");
 default_value_region.innerHTML = "Choose..."
 default_value_region.setAttribute("value", "")
+default_value_region.setAttribute("disabled", "")
+default_value_region.setAttribute("selected", "")
 regions.append(default_value_region)
 
 for (item of regions_data ){
@@ -17,6 +19,8 @@ let towns = document.getElementById("towns");
 let default_value_towns = document.createElement("option");
 default_value_towns.innerHTML = "Choose..."
 default_value_towns.setAttribute("value", "")
+default_value_towns.setAttribute("disabled", "")
+default_value_towns.setAttribute("selected", "")
 towns.append(default_value_towns)
 
 let check_button = document.getElementById("check")
@@ -28,6 +32,11 @@ regions.addEventListener("change", (event) => {
             towns.innerHTML = "";
             let default_option = document.createElement("option")
             default_option.innerHTML = "Choose...";
+            default_option.setAttribute("selected", "")
+            default_option.setAttribute("value", "")
+            default_option.setAttribute("disabled", "")
+            
+            
             towns.append(default_option);
             
             key[regions.value].forEach(element => {

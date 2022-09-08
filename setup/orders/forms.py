@@ -58,12 +58,14 @@ class CheckoutForm(forms.ModelForm):
             }),
             "region":forms.Select(attrs = {
                 "id":"regions",
-                "class":"form-control"
+                "class":"form-select",
+                "required":""
             }),
             "city":forms.Select(attrs = {
                 "id":"towns",
-                "class":"form-control",
+                "class":"form-select",
                 "disabled":"",
+                "required":""
             }),
             "postal_code":forms.TextInput(attrs={
                 "class":"form-control"

@@ -64,7 +64,7 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Billing address</h4>
-        <form method="post" class="needs-validation {% if not valid %} was-validated {% endif %}" novalidate>
+        <form method="post" class="needs-validation {% if errors %} was-validated {% endif %}" novalidate>
           {% csrf_token %}
           <div class="row g-3">
             <div class="col-sm-6">

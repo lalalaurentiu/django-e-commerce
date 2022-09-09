@@ -8,6 +8,7 @@ from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic import TemplateView
 from django.contrib import messages
 from .models import *
+from django.urls import resolve
 
 
 def cart(request):
@@ -26,21 +27,20 @@ def cart(request):
 
 class Checkout(TemplateView):
     template = "cart/checkout.html"
-    checkout = CheckoutForm()
-    context = {
-        "form":checkout,
-    }
+    context = {}
+
     def get(self, request):
+        checkout = CheckoutForm()
+        self.context["form"] = checkout
+        self.context["errors"] = False
         return render(request, self.template, self.context)
 
     def post(self, request):
         cart = Cart(request)
         checkoutform = CheckoutForm(request.POST)
         if request.method == "POST":
-            
             if checkoutform.is_valid():
                 checkout = checkoutform.save()
-                
                 for item in cart:
                     OrderItem.objects.create(
                         order_id = checkout.pk,
@@ -52,7 +52,8 @@ class Checkout(TemplateView):
                 messages.success(request, "Your order has been placed" )
                 return redirect("home:home")          
             else:
-                self.context["form"] = checkoutform
+                self.context["form"] = CheckoutForm(request.POST)
+                self.context["errors"] = True
                 return render(request, self.template, self.context)
         else:
             self.context["form"] = CheckoutForm()
@@ -61,6 +62,7 @@ class Checkout(TemplateView):
 @requires_csrf_token
 @require_POST
 def cart_add(request, product_id):
+    print(request.path_info)
     cart = Cart(request)
     product = get_object_or_404(Products, id=product_id)
     form = CartAddProductForm(request.POST)
@@ -70,7 +72,7 @@ def cart_add(request, product_id):
         cart.add(product=product,
                  quantity=1,
                  override_quantity=cd['override'])
-    return HttpResponse(status = 204)
+    return HttpResponse(status = 100)
 
 def cart_decrease(request, product_id):
     cart = Cart(request)
@@ -79,7 +81,7 @@ def cart_decrease(request, product_id):
     print(form.errors)
     if form.is_valid():
         cart.decrease(product=product)
-    return HttpResponse(status = 204)
+    return HttpResponse(status = 100)
 
 
 @require_POST
@@ -87,5 +89,5 @@ def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Products, id=product_id)
     cart.remove(product)
-    return HttpResponse(status = 204)
+    return HttpResponse(status = 100)
 

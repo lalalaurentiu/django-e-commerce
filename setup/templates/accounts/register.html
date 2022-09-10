@@ -19,20 +19,33 @@
         <form method = "POST" class="position-absolute top-50 start-50 translate-middle" style="width: 300px;">
         {% csrf_token %}
           <img class="mb-4" src="https://www.rcpe.ac.uk/sites/default/files/yourlogo.png" alt="" width="72" height="57">
-          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+          <h1 class="h3 mb-3 fw-normal">Register</h1>
           <div class="form-floating">
-            {{ form.username }}
+            {{ form.email }}
             <label for="id_username">Email address</label>
+            {% if form.email.errors %}
+                <small class="text-danger" >{{ form.email.errors }}</small> 
+            {% endif %}
           </div>
           <div class="form-floating">
-            {{ form.password }}
-            <label for="id_password">Password</label>
+            {{ form.password1 }}
+            <label for="floatingPassword">Password</label>
+            {% if form.password1.errors %}
+                <small class="text-danger" >{{ form.password1.errors }}</small> 
+            {% endif %}
+          </div>
+          <div class="form-floating">
+            {{ form.password2 }}
+            <label for="floatingPassword">Confitm Password</label>
+            {% if form.password2.errors %}
+                <small class="text-danger" >{{ form.password2.errors }}</small> 
+            {% endif %}
           </div>
           <div class="mb-3 text-muted">
-              Don't have an account?
-              <a href="{% url 'accounts:register' %}" class="text-primary">Create</a>
+                Have an account?
+                <a href="{% url 'accounts:login' %}" class="text-primary">Login</a>
           </div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
         </form>
     </div>
   </body>

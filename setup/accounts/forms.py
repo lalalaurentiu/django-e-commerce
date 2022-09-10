@@ -11,9 +11,9 @@ from django import forms
 class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)  
-        self.fields['email'] = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Email"}))
-        self.fields['password1'] = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password"}))
-        self.fields['password2'] = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Confirm Password"}))
+        self.fields['email'] = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"name@example.com","class":"form-control"}))
+        self.fields['password1'] = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password","class":"form-control"}))
+        self.fields['password2'] = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Confirm Password","class":"form-control"}))
 
     class Meta:
         model = CustomUser

@@ -13,23 +13,28 @@
     </button>
     <div class="collapse navbar-collapse col-lg-4" id="navbarSupportedContent">
       <ul class="navbar-nav m-auto mb-2 mb-lg-0 w-100 justify-content-end">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <i class="fas fa-user text-primary"></i>
-            Profile
-          </a>
-          <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fas fa-user text-primary"></i>
+              Profile
+            </a>
+            <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </li>
+        {% else %}
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+          </li>
+        {% endif %}
         <li class="nav-item d-flex">
-          
           <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <i class="fas fa-shopping-cart text-primary"></i>
             {% if cart %}

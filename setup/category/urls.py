@@ -1,9 +1,5 @@
 from django.urls import path
-from .views import (
-    products_by_category,
-    products_by_brands,
-    product
-)
+from .views import *
 
 app_name = "category"
 

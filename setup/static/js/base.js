@@ -54,4 +54,27 @@ function listener_buttons (list){
 listener_buttons(cart_buttons);
 listener_buttons(cart_remove_buttons);
 
+let input = document.getElementById("search");
+
+input.addEventListener("click", () =>{
+    let browse_container = document.getElementById("browse");
+    if (browse_container.classList.contains("d-none")){
+        browse_container.classList.remove("d-none");
+    }else{
+        browse_container.classList.add("d-none");
+    }
+    })
+
+    function search_products (){
+    let input = document.getElementById("search");
+    let search_items = document.getElementsByClassName("search-item");
+    input = input.value.toLowerCase();;
+    search_items.forEach(element => {
+        if(!element.innerHTML.toLowerCase().includes(input)){
+        element.style.display = "none";
+        }else{
+        element.style.display = "initial";
+        }
+    });
+};
 

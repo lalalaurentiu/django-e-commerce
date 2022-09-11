@@ -53,7 +53,7 @@ class Products(models.Model):
         return reverse('category:product',  args=[self.slug])
 
     def save(self, *args, **kwargs):
-        self.slug = self.name.replace(" ", "_")
+        self.slug = self.name.replace(" ", "-")
         super(Products, self).save(*args, **kwargs)
 
 class ProductsDetails(models.Model):

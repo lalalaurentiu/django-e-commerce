@@ -6,6 +6,7 @@ def items(request):
 
     context = {
         "categorys":categorys,
+        "products":products
     }
 
     return context

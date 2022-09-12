@@ -5,10 +5,11 @@ from category.models import Products
 from .cart import Cart
 from .forms import *
 from django.views.decorators.csrf import requires_csrf_token
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.contrib import messages
 from .models import *
-from django.urls import resolve
+from .process import html_to_pdf 
+from django.contrib.auth.decorators import login_required
 
 
 def cart(request):
@@ -40,7 +41,12 @@ class Checkout(TemplateView):
         checkoutform = CheckoutForm(request.POST)
         if request.method == "POST":
             if checkoutform.is_valid():
-                checkout = checkoutform.save()
+                if request.user.id:
+                    checkout = checkoutform.save(commit=False)
+                    checkout.user_id = request.user.id
+                    checkout.save()
+                else:
+                    checkout = checkoutform.save()
                 for item in cart:
                     OrderItem.objects.create(
                         order_id = checkout.pk,
@@ -90,4 +96,19 @@ def cart_remove(request, product_id):
     product = get_object_or_404(Products, id=product_id)
     cart.remove(product)
     return HttpResponse(status = 100)
+
+
+
+
+@login_required
+def generatePdf(request, order_id):
+    template = "order/download.html"
+    data = OrderItem.objects.filter(order_id = order_id)
+    context = {
+        "data":data
+    }
+
+    pdf = html_to_pdf(template, context_dict = context)
+
+    return HttpResponse(pdf, content_type='application/pdf')
 

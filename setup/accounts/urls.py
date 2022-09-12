@@ -3,7 +3,7 @@ from django.contrib.auth.views import(
     LoginView,
     LogoutView
 ) 
-from .views import register
+from .views import *
 from .forms import *
 
 app_name = "accounts"
@@ -12,4 +12,5 @@ urlpatterns = [
     path("login/", LoginView.as_view(form_class = CustomAuthentificationForm ,template_name = "accounts/login.html"), name="login"),
     path("register/", register, name="register"),
     path("logout/", LogoutView.as_view(), name="logout"),
+    path("orders/", downloadOrders, name="orders"),
 ]

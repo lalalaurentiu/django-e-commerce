@@ -12,5 +12,12 @@ def query_len(query):
 
 @register.filter(name="cartlen")
 def cart_len(cart):
-    print(len(cart))
     return len(cart)
+
+@register.filter(name="totalPrice")
+def total_price(obj):
+    total = 0
+    for item in obj:
+        total += item["price"]
+
+    return total

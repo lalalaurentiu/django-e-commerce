@@ -1,0 +1,48 @@
+{% load static %}
+{% load bootstrap5 %}
+{% load fontawesome_5 %}
+{% load tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {% fontawesome_5_static %}
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="position-relative container">
+            <div class="table-responsive mb-3">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Ammount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in data %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ order.product }}</td>
+                                <td>{{ order.product.price }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="w-100">
+                    Total: {{ data.values|totalPrice }} <br>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

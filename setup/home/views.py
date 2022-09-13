@@ -2,20 +2,24 @@ from django.shortcuts import render
 from .models import (
     Claim
 )
-from category.models import (
-    Category,
-    Products
-)
+from category.models import *
 
 def home(request):
+    print(request.path)
     template = "home/home.html"
 
     carousel = Claim.objects.all() #for modify in 
-    products = Products.objects.all()
-
+    
+    if "popularity" in request.path :
+        products = Products.objects.prefetch_related("productRaiting").order_by("-productRaiting")
+        section = "popularity"
+    else:
+        products = Products.objects.all()
+        section = "all"
     context = {
         "carousel":carousel,
-        "products":products
+        "products":products,
+        "section":section
     }
 
     return render(request, template, context)

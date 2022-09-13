@@ -5,9 +5,8 @@
     <div class="card border-0">
         <div class="card-header justify-content-center d-flex border-0 shadow">
             <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item"><a class="nav-link active" href="#">All Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Second Item</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Third Item</a></li>
+                <li class="nav-item"><a class="nav-link {% if 'all' in section  %} active {% endif %}" href="{% url 'home:home' %}">All Products</a></li>
+                <li class="nav-item"><a class="nav-link {% if 'popularity' in section  %} active {% endif %}" href="{% url 'home:homePopularity' %}">Popularity</a></li>
             </ul>
         </div>
         <div class="card-body p-0">

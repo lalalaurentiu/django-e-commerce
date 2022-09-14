@@ -4,8 +4,8 @@
             <p class="fs-5">Category</p>
             <ul class="list-group list-group-flush" style="max-height: 160px; overflow: auto; ">
                 {% for category in categorys%}
-                    <li class="list-group-item">
-                        <a class="text-decoration-none text-muted" href="{% url 'category:products_category' category.slug %}">{{ category.title }}</a>
+                    <li class="list-group-item {% if category.title in request.path  %}active{% endif %}">
+                        <a class="text-decoration-none {% if category.title in request.path  %}text-white{% else %}text-muted{% endif %}" href="{% url 'category:products_category' category.slug %}">{{ category.title }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -13,24 +13,24 @@
         <div class="col-7 col-md-4 col-lg-12 mb-5">
             <p class="fs-5">Order by</p>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <a class="text-decoration-none text-muted" href="">Default</a>
+                <li class="list-group-item {% if section == 'all' %}active{% endif %}">
+                    <a class="text-decoration-none {% if section == 'all' %}text-white{% else %}text-muted{% endif %}" href="{{ request.path }}">All Products</a>
                 </li>
-                <li class="list-group-item">
-                    <a class="text-decoration-none text-muted" href="">Popularity</a>
+                <li class="list-group-item {% if section == 'popularity' %}active{% endif %}">
+                    <a class="text-decoration-none {% if section == 'popularity' %}text-white{% else %}text-muted{% endif %}" href="{{ request.path }}?args=popularity">Popularity</a>
                 </li>
-                <li class="list-group-item">
-                    <a class="text-decoration-none text-muted" href="">Price: low to high</a> 
+                <li class="list-group-item {% if section == 'low' %}active{% endif %}">
+                    <a class="text-decoration-none {% if section == 'low' %}text-white{% else %}text-muted{% endif %}" href="{{ request.path }}?args=low">Price: low to high</a> 
                 </li>
-                <li class="list-group-item">
-                    <a class="text-decoration-none text-muted" href="">Price: high to low</a> 
+                <li class="list-group-item {% if section == 'hight' %}active{% endif %}">
+                    <a class="text-decoration-none {% if section == 'hight' %}text-white{% else %}text-muted{% endif %}" href="{{ request.path }}?args=hight">Price: high to low</a> 
                 </li>
             </ul>
         </div>
         <div class="col-7 col-md-4 col-lg-12 mb-5">
             <p class="fs-5">Order by Raiting</p>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex align-items-center justify-content-between p-0">
+            <ul class="list-group list-group-flush ">
+                <li class="list-group-item d-flex align-items-center justify-content-between p-0 {% if section == 'starfour' %}border-primary{% endif %}">
                     <div class="rating">
                         <input type="radio"  name="rating" checked/>
                         <label class = "full" ></label>
@@ -43,11 +43,11 @@
                         <input type="radio"  name="rating" />
                         <label class = "full" ></label>
                     </div>
-                    <a class="text-decoration-none text-muted" href="">
+                    <a class="text-decoration-none text-muted" href="{{ request.path }}?args=starfour">
                         <i class="fas fa-chevron-right fa-fw d-fa-preview" style="font-weight: 900;"></i>
                     </a>
                 </li>
-                <li class="list-group-item d-flex align-items-center justify-content-between p-0">
+                <li class="list-group-item d-flex align-items-center justify-content-between p-0 {% if section == 'starthree' %}border-primary{% endif %}">
                     <div class="rating">
                         <input type="radio"  name="rating" checked/>
                         <label class = "full" ></label>
@@ -60,11 +60,11 @@
                         <input type="radio"  name="rating" />
                         <label class = "full" ></label>
                     </div>
-                    <a class="text-decoration-none text-muted" href="">
+                    <a class="text-decoration-none text-muted" href="{{ request.path }}?args=starthree">
                         <i class="fas fa-chevron-right fa-fw d-fa-preview" style="font-weight: 900;"></i>
                     </a>
                 </li>
-                <li class="list-group-item d-flex align-items-center justify-content-between p-0">
+                <li class="list-group-item d-flex align-items-center justify-content-between p-0 {% if section == 'startwo' %}border-primary{% endif %}">
                     <div class="rating">
                         <input type="radio"  name="rating" checked/>
                         <label class = "full" ></label>
@@ -77,11 +77,11 @@
                         <input type="radio"  name="rating" />
                         <label class = "full" ></label>
                     </div>
-                    <a class="text-decoration-none text-muted" href="">
+                    <a class="text-decoration-none text-muted" href="{{ request.path }}?args=startwo">
                         <i class="fas fa-chevron-right fa-fw d-fa-preview" style="font-weight: 900;"></i>
                     </a>
                 </li>
-                <li class="list-group-item d-flex align-items-center justify-content-between p-0">
+                <li class="list-group-item d-flex align-items-center justify-content-between p-0 {% if section == 'starone' %}border-primary{% endif %}">
                     <div class="rating">
                         <input type="radio"  name="rating" checked/>
                         <label class = "full" ></label>
@@ -94,7 +94,7 @@
                         <input type="radio"  name="rating" />
                         <label class = "full" ></label>
                     </div>
-                    <a class="text-decoration-none text-muted" href="">
+                    <a class="text-decoration-none text-muted" href="{{ request.path }}?args=starone">
                         <i class="fas fa-chevron-right fa-fw d-fa-preview" style="font-weight: 900;"></i>
                     </a>
                 </li>

@@ -33,7 +33,14 @@
                                     <hr>
                                     <h3 class="fs-5">{{ product.name }}</h3>
                                     <div class="text-black d-flex justify-content-start align-items-center">
-                                        <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                        {% if product.deals.all|len != 0 %}
+                                            {% for deal in product.deals.all %}
+                                                <div class="fs.2 fw-bold text-decoration-line-through text-danger">{{ product.price }} LEi</div>
+                                                <div class="ms-2 fs.2 fw-bold text-primary">{{ product.price|deals:deal}} LEi</div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                        {% endif %}
                                         <form action="{% url 'cart:cart_add' product.id %}" method='post'>
                                             {{ add_to_cart }}
                                             {% csrf_token %}
@@ -41,6 +48,14 @@
                                                 <i class="fas fa-shopping-cart text-primary"></i>
                                             </button>
                                         </form>
+                                    </div>
+                                    <div >
+                                        {% if product.deals.all|len != 0 %}
+                                            {% for deal in product.deals.all %}
+                                                <img class="img-fluid" src="{{ deal.image.url }}" alt="{{ deal.image.url }}" style="max-width: 100px;">
+                                                <div class="text-primary">Reducere {{ deal.deal_sum }}{% if deal.deal_choices == 'percent'%}%{% else %}Lei{% endif %}</div>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                     <fieldset class="rating">
                                         {% for raiting in product.productRaiting.all %}

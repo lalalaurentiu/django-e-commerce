@@ -1,4 +1,5 @@
 from django import template
+from ..models import Claim
   
 register = template.Library()
 
@@ -21,3 +22,10 @@ def total_price(obj):
         total += item["price"]
 
     return total
+
+@register.filter(name="deals")
+def deal_product(price, value):
+    if value.deal_choices == "percent":
+        return int(float(price) - ((value.deal_sum/100)*float(price)))
+    else:
+        return int(float(price) - value.deal_sum)

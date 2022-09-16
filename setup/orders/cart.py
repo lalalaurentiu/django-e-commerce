@@ -1,10 +1,10 @@
 from decimal import Decimal
 from django.conf import settings
 from category.models import Products
+from home.models import Claim
 
 
 class Cart(object):
-
     def __init__(self, request):
         """
         Initialize the cart.
@@ -24,6 +24,7 @@ class Cart(object):
         product_ids = self.cart.keys()
         # get the product objects and add them to the cart
         products = Products.objects.filter(id__in=product_ids)
+        
 
         cart = self.cart.copy()
         for product in products:
@@ -88,6 +89,16 @@ class Cart(object):
         self.save()
 
     def get_total_price(self):
+        deals = Claim.objects.all()
+        for item in self.cart.values():
+            for deal in deals:
+                if len(deal.products.filter(id = item["product"].id )) != 0:
+                    if deal.deal_choices == "percent":
+                        item['price'] = int(Decimal(item['price']) - Decimal((deal.deal_sum/100)) * Decimal(item['price']))
+                    else:
+                        item['price'] = int(item["price"] - deal.deal_sum)
+                else:
+                    item['price'] = Decimal(item['price'])
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
     
     def cart_products(self):

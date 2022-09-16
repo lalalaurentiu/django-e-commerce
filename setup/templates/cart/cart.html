@@ -38,7 +38,16 @@
                                     {% endif %}
                                 </th>
                                 <td class="align-middle">{{ product.name }}</td>
-                                <td class="align-middle">{{ product.price }}</td>
+                                <td class="align-middle" style="min-width: 100px;">
+                                    {% if product.deals.all|len != 0 %}
+                                        {% for deal in product.deals.all %}
+                                            <div class="fs.2 fw-bold text-decoration-line-through text-danger">{{ product.price }} LEi</div>
+                                            <div class="ms-2 fs.2 fw-bold text-primary">{{ product.price|deals:deal}} LEi</div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                    {% endif %}
+                                </td>
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center">
                                         {{ item.quantity }}
@@ -68,7 +77,15 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">{{ item.price }}</td>
+                                <td class="align-middle">
+                                    {% if product.deals.all|len != 0 %}
+                                        {% for deal in product.deals.all %}
+                                            <div class="ms-2 fs.2 fw-bold text-primary">{{ product.price|deals:deal}} LEi</div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endwith %}
                         {% endfor %}

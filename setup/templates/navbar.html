@@ -69,7 +69,14 @@
                     {{ product.name }}
                   </div>
                   <div>
-                    {{ item.price }} Lei
+                    {% if product.deals.all|len != 0 %}
+                        {% for deal in product.deals.all %}
+                            <div class="fs.2 fw-bold text-decoration-line-through text-danger">{{ product.price }} LEi</div>
+                            <div class="ms-2 fs.2 fw-bold text-primary">{{ product.price|deals:deal}} LEi</div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                    {% endif %}
                   </div>
                   <form action='{% url "cart:cart_remove" product.id %}' method="post">
                     <button class="cart-remove-product" type="submit" style="background-color: white;border:none;">

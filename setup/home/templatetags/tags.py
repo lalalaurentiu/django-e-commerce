@@ -17,6 +17,7 @@ def cart_len(cart):
 
 @register.filter(name="totalPrice")
 def total_price(obj):
+    print(obj)
     total = 0
     for item in obj:
         total += item["price"]

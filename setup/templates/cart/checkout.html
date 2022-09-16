@@ -39,7 +39,16 @@
                   {% endif %}
                   <h6 class="my-1">{{ product.name }}</h6>
                 </div>
-                <span class="text-muted">{{ item.price }} Lei</span>
+                <span class="text-muted">
+                  {% if product.deals.all|len != 0 %}
+                      {% for deal in product.deals.all %}
+                          <div class="fs.2 fw-bold text-decoration-line-through text-danger">{{ product.price }} LEi</div>
+                          <div class="ms-2 fs.2 fw-bold text-primary">{{ product.price|deals:deal}} LEi</div>
+                      {% endfor %}
+                  {% else %}
+                      <div class="fs.2 fw-bold">{{ product.price }} LEi</div>
+                  {% endif %}
+                </span>
               </li>
             {% endwith %}
           {% endfor %}

@@ -47,9 +47,21 @@ class Cart(object):
         Add a product to the cart or update its quantity.
         """
         product_id = str(product.id)
+        deals = Claim.objects.all()
         if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 0,
-                                      'price': str(product.price)}
+            
+   
+            for deal in deals:
+                if len(deal.products.filter(id = product_id )) != 0:
+                    if deal.deal_choices == "percent":
+                        self.cart[product_id] = {'quantity': 0,
+                                      'price': int(Decimal(product.price) - Decimal((deal.deal_sum/100)) * Decimal(product.price))}
+                    else:
+                        self.cart[product_id] = {'quantity': 0,
+                                      'price': int(product.price - deal.deal_sum)}
+                else:
+                    self.cart[product_id] = {'quantity': 0,
+                                            'price': str(product.price)}
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
@@ -89,16 +101,6 @@ class Cart(object):
         self.save()
 
     def get_total_price(self):
-        deals = Claim.objects.all()
-        for item in self.cart.values():
-            for deal in deals:
-                if len(deal.products.filter(id = item["product"].id )) != 0:
-                    if deal.deal_choices == "percent":
-                        item['price'] = int(Decimal(item['price']) - Decimal((deal.deal_sum/100)) * Decimal(item['price']))
-                    else:
-                        item['price'] = int(item["price"] - deal.deal_sum)
-                else:
-                    item['price'] = Decimal(item['price'])
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
     
     def cart_products(self):

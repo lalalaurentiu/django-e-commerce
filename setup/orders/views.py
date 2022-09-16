@@ -52,7 +52,7 @@ class Checkout(TemplateView):
                         order_id = checkout.pk,
                         product_id = item["product"].id,
                         quantity = item["quantity"],
-                        price = item["quantity"] * item["product"].price
+                        price = item["quantity"] * item["price"]
                         )
                 cart.clear()
                 messages.success(request, "Your order has been placed" )

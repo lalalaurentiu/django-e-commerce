@@ -5,7 +5,6 @@ from .models import (
 from category.models import *
 
 def home(request):
-    print(request.path)
     template = "home/home.html"
 
     carousel = Claim.objects.all() #for modify in 

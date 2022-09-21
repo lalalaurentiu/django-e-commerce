@@ -3,7 +3,11 @@
 {% load tags %}
 
 {% block css %} 
-    <link rel="stylesheet" href="{% static 'css/deals.css' %}">
+    {% if user.is_authenticated %}
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/deals.css' %}">
+    {% endif %}
 {% endblock %}
 {% block content %}
 <style>
@@ -105,21 +109,27 @@
                         {% endif %}
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
-                        <fieldset class="rating">
-                            {% for raiting in product.productRaiting.all %}
-                                {% with raiting.raiting|floatformat as star %}
-                                    {% for i in 6|times %}
-                                        {% if i|floatformat <= star %}
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                        {% else %}
-                                            <input type="radio"  name="rating" />
-                                            <label class = "full" ></label>
-                                        {% endif%}
-                                    {% endfor %}
-                                {% endwith %}
-                            {% endfor %}
-                        </fieldset>
+                        <div>
+                            <fieldset class="rating">
+                                {% for raiting in product.productRaiting.all %}
+                                    {% with raiting.raiting|floatformat as star %}
+                                        {% for i in 6|times %}
+                                            {% if i|floatformat <= star %}
+                                                <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
+                                                <label class = "full" ></label>
+                                            {% else %}
+                                                <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
+                                                <label class = "full" ></label>
+                                            {% endif%}
+                                        {% endfor %}
+                                    {% endwith %}
+                                {% endfor %}
+                            </fieldset>
+                            <div id="message_container" class="form-floating" style="display: none;">
+                                <textarea class="form-control" id="message" >Leave a comment here</textarea>
+                                <button class="btn btn-primary m-1" type="button">Save</button>
+                            </div>
+                        </div>
                         <form action="{% url 'cart:cart_add' product.id %}" method='post'>
                             {{ add_to_cart }}
                             {% csrf_token %}
@@ -239,4 +249,78 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
               </div>
         </div>
     </div>
+    
+    <script>
+        let parent =  document.querySelector("fieldset")
+        let childrens = parent.querySelectorAll("input")
+        let childrens_label = parent.querySelectorAll("label")
+        let message_container = document.getElementById("message_container")
+        let message = document.getElementById("message")
+        let save_message = message_container.querySelector("button")
+        console.log(save_message)
+
+        let msg 
+        let raiting
+
+        parent.addEventListener("mouseover", () =>{
+            let child_idx = []
+            childrens.forEach((element,idx) => {
+                if (element.hasAttribute("checked")){
+                    child_idx.push(idx)
+                }
+                element.removeAttribute("checked")
+            });
+            parent.addEventListener("mouseleave",()=>{
+                for (let i = 0; i < child_idx.length; i++){
+                    childrens[child_idx[i]].setAttribute("checked", "")
+                }
+            })
+        })
+
+        childrens_label.forEach((element,idx) => {
+                element.addEventListener("click", () =>{
+                    message_container.style.display = "initial"
+                    console.log(element, 5 - idx )
+                    raiting = 5 - idx
+                })
+            });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        save_message.addEventListener("click", () =>{
+            console.log("here")
+            const csrftoken = getCookie('csrftoken')
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", '{% url "category:raiting" %}', true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            
+            xhr.send(`star=${raiting}&message=${message.value}&product={{ product.id }}`);location.reload();
+            xhr.onreadystatechange = () => { // Call a function when the state changes.
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                location.reload();
+            }
+            }
+        })
+        
+        
+        
+    </script>
 {% endblock %}
+

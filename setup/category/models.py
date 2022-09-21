@@ -67,6 +67,7 @@ class ProductsDetails(models.Model):
 class ProductRaiting(models.Model):
     product = models.ForeignKey(Products,on_delete=models.CASCADE, related_name="productRaiting")
     raiting = models.DecimalField(default = 5, max_digits=2, decimal_places=1)
+    message = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.product.name + " " + str(self.raiting)

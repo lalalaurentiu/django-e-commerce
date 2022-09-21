@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404, HttpResponse
 from .models import *
 from django.db.models import FilteredRelation
+from django.contrib import messages
+
 def products_by_category(request, slug ):
 
     template = "category/category_products.html"
@@ -148,3 +150,21 @@ def product(request, product_slug):
     }
 
     return render(request ,template ,context )
+
+def raiting(request):
+    print(request.POST)
+    product = Products.objects.get(id = request.POST["product"])
+    star = request.POST["star"]
+    message = request.POST["message"]
+
+    # try:
+    instance = ProductRaiting.objects.create(
+        product=product,
+        raiting=star,
+        message=message
+    )
+    instance.save()
+    # except:
+    #     pass
+    messages.success(request,"Thanks for raiting")
+    return HttpResponse(200)

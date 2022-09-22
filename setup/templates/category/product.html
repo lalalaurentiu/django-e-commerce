@@ -111,10 +111,9 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
                             <fieldset class="rating">
-                                {% for raiting in product.productRaiting.all %}
-                                    {% with raiting.raiting|floatformat as star %}
+                                    {% with product.productRaiting.all|raiting as star %}
                                         {% for i in 6|times %}
-                                            {% if i|floatformat <= star %}
+                                            {% if i <= star %}
                                                 <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
                                                 <label class = "full" ></label>
                                             {% else %}
@@ -123,7 +122,6 @@
                                             {% endif%}
                                         {% endfor %}
                                     {% endwith %}
-                                {% endfor %}
                             </fieldset>
                             <div id="message_container" class="form-floating" style="display: none;">
                                 <textarea class="form-control" id="message" >Leave a comment here</textarea>
@@ -151,101 +149,54 @@
                         <hr class="w-100">
                     </div>
                 </div>
-                <div class="row my-3 border-bottom">
-                    <div class="col-md-3 col-12 d-flex align-items-center justify-content-center">
-                        <div class="rounded-circle" 
-                            style ="
-                                height: 150px;
-                                width: 150px; 
-                                background-image: url({% static 'Images/No_image.jpg' %});
-                                background-repeat: no-repeat;
-                                background-size: 150px;
-                                background-position: center;">
+                {% for raiting in product.productRaiting.all %}
+                    <div class="row my-3 border-bottom">
+                        <div class="col-md-3 col-12 d-flex align-items-center justify-content-center">
+                            <div class="rounded-circle" 
+                                style ="
+                                    height: 150px;
+                                    width: 150px; 
+                                    background-image: url({% static 'Images/No_image.jpg' %});
+                                    background-repeat: no-repeat;
+                                    background-size: 150px;
+                                    background-position: center;">
 
-                        </div>
-                    </div>
-                    <div class="col-md-9 col-12 d-flex d-md-block justify-content-center ">
-                        <div class="text-center text-md-start">
-                            <div>
-                                <p class="fs-1">Jhon Doe</p>
-                            </div>
-                            <div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex d-md-block justify-content-center ">
-                                        <div class="rating">
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" />
-                                            <label class = "full" ></label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <p class="text-secondary">10/12/2023</p>
-                                    </li>
-                                    <li class="list-group-item">
-                                        Where does it come from?
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-                                    </li>
-                                  </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row my-3 border-bottom">
-                    <div class="col-md-3 col-12 d-flex align-items-center justify-content-center">
-                        <div class="rounded-circle" 
-                            style ="
-                                height: 150px;
-                                width: 150px; 
-                                background-image: url('{% static 'Images/No_image.jpg' %}');
-                                background-repeat: no-repeat;
-                                background-size: 150px;
-                                background-position: center;">
-
-                        </div>
-                    </div>
-                    <div class="col-md-9 col-12 d-flex d-md-block justify-content-center ">
-                        <div class="row text-center text-md-start">
-                            <div class="col-12">
-                                <p class="fs-1">Jhon Doe</p>
-                            </div>
-                            <div class="col-12">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <div class="rating">
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" checked/>
-                                            <label class = "full" ></label>
-                                            <input type="radio"  name="rating" />
-                                            <label class = "full" ></label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <p class="text-secondary">10/12/2023</p>
-                                    </li>
-                                    <li class="list-group-item">
-                                        Where does it come from?
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classicaections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-                                    </li>
-                                  </ul>
+                        <div class="col-md-9 col-12 d-flex d-md-block justify-content-center ">
+                            <div class="text-center text-md-start">
+                                <div>
+                                    <p class="fs-1">{{ raiting.user }}</p>
+                                </div>
+                                <div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex d-md-block justify-content-center ">
+                                            <div class="rating">
+                                                {% with raiting.raiting|floatformat as star %}
+                                                    {% for i in 6|times %}
+                                                        {% if i|floatformat <= star %}
+                                                            <input type="radio"  name="rating" checked/>
+                                                            <label class = "full" ></label>
+                                                        {% else %}
+                                                            <input type="radio"  name="rating" />
+                                                            <label class = "full" ></label>
+                                                        {% endif%}
+                                                    {% endfor %}
+                                                {% endwith %}
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <p class="text-secondary">10/12/2023</p>
+                                        </li>
+                                        <li class="list-group-item">
+                                            {{ raiting.message }}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
               </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 from django.db import models 
 from django.urls import reverse 
-
+from accounts.models import CustomUser
 # change 
 # from django.utils.translation import ugettext as _ 
 # whith
@@ -65,6 +65,7 @@ class ProductsDetails(models.Model):
         return self.product.name + " " + self.detail_name
 
 class ProductRaiting(models.Model):
+    user =  models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE)
     product = models.ForeignKey(Products,on_delete=models.CASCADE, related_name="productRaiting")
     raiting = models.DecimalField(default = 5, max_digits=2, decimal_places=1)
     message = models.TextField(null=True, blank=True)

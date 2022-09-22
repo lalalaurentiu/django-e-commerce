@@ -30,3 +30,10 @@ def deal_product(price, value):
         return int(float(price) - ((value.deal_sum/100)*float(price)))
     else:
         return int(float(price) - value.deal_sum)
+
+@register.filter(name="raiting")
+def deal_product(obj):
+    raiting_values = 0
+    for raiting in obj.values():
+       raiting_values += raiting["raiting"]
+    return raiting_values // len(obj.values())

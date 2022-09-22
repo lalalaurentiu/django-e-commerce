@@ -58,19 +58,17 @@
                                         {% endif %}
                                     </div>
                                     <fieldset class="rating">
-                                        {% for raiting in product.productRaiting.all %}
-                                            {% with raiting.raiting|floatformat as star %}
-                                                {% for i in 6|times %}
-                                                    {% if i|floatformat <= star %}
-                                                        <input type="radio"  name="rating" checked/>
-                                                        <label class = "full" ></label>
-                                                    {% else %}
-                                                        <input type="radio"  name="rating" />
-                                                        <label class = "full" ></label>
-                                                    {% endif%}
-                                                {% endfor %}
-                                            {% endwith %}
-                                        {% endfor %}
+                                        {% with product.productRaiting.all|raiting as star %}
+                                            {% for i in 6|times %}
+                                                {% if i <= star %}
+                                                    <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
+                                                    <label class = "full" ></label>
+                                                {% else %}
+                                                    <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
+                                                    <label class = "full" ></label>
+                                                {% endif%}
+                                            {% endfor %}
+                                        {% endwith %}
                                     </fieldset>
                                 </div>
                             </div>

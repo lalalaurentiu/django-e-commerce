@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404, HttpRes
 from .models import *
 from django.db.models import FilteredRelation
 from django.contrib import messages
+from accounts.models import CustomUser
 
 def products_by_category(request, slug ):
 
@@ -153,12 +154,14 @@ def product(request, product_slug):
 
 def raiting(request):
     print(request.POST)
+    user = CustomUser.objects.get(id = request.user.id)
     product = Products.objects.get(id = request.POST["product"])
     star = request.POST["star"]
     message = request.POST["message"]
 
     # try:
     instance = ProductRaiting.objects.create(
+        user=user,
         product=product,
         raiting=star,
         message=message

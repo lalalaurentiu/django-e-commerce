@@ -25,7 +25,6 @@ class Cart(object):
         # get the product objects and add them to the cart
         products = Products.objects.filter(id__in=product_ids)
         
-
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]['product'] = product
@@ -49,8 +48,6 @@ class Cart(object):
         product_id = str(product.id)
         deals = Claim.objects.all()
         if product_id not in self.cart:
-            
-   
             for deal in deals:
                 if len(deal.products.filter(id = product_id )) != 0:
                     if deal.deal_choices == "percent":
@@ -59,14 +56,15 @@ class Cart(object):
                     else:
                         self.cart[product_id] = {'quantity': 0,
                                       'price': int(product.price - deal.deal_sum)}
-                else:
-                    self.cart[product_id] = {'quantity': 0,
-                                            'price': str(product.price)}
+        else:
+            self.cart[product_id] = {'quantity': 0,
+                                    'price': str(product.price)}
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
             self.cart[product_id]['quantity'] += quantity
         self.save()
+        print(self.cart.values())
 
     def decrease(self, product):
         """
@@ -101,6 +99,7 @@ class Cart(object):
         self.save()
 
     def get_total_price(self):
+        # print(self.cart.values())
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
     
     def cart_products(self):

@@ -56,15 +56,16 @@ class Cart(object):
                     else:
                         self.cart[product_id] = {'quantity': 0,
                                       'price': int(product.price - deal.deal_sum)}
-        else:
-            self.cart[product_id] = {'quantity': 0,
-                                    'price': str(product.price)}
+                else:
+                    self.cart[product_id] = {'quantity': 0,
+                                            'price': str(product.price)}
+                                   
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
             self.cart[product_id]['quantity'] += quantity
         self.save()
-        print(self.cart.values())
+        
 
     def decrease(self, product):
         """

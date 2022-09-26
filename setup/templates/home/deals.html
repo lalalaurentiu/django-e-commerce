@@ -58,7 +58,9 @@
                                                             <div class="accordion-body">
                                                                 {% if product.productDetails.all|len != 0 %}
                                                                     {% for detail in product.productDetails.all %}
-                                                                        {{ detail.detail_name }} {{ detail.detail_value }}
+                                                                        <div>
+                                                                            {{ detail.detail_name }} : {{ detail.detail_value }}
+                                                                        </div>
                                                                     {% endfor %}
                                                                 {% else %}
                                                                     No details

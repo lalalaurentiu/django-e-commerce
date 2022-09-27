@@ -3,6 +3,7 @@ from .models import *
 from django.db.models import FilteredRelation
 from django.contrib import messages
 from accounts.models import CustomUser
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def products_by_category(request, slug ):
 
@@ -60,6 +61,18 @@ def products_by_category(request, slug ):
     except:
         pass
 
+    page_num = request.GET.get('page', 1)
+    paginator = Paginator(products, 8)
+
+    try:
+        products = paginator.page(page_num)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver the first page
+        products = paginator.page(1)
+    except EmptyPage:
+        # if the page is out of range, deliver the last page
+        products = paginator.page(paginator.num_pages)
+
     context = {
         "products":products,
         "section":section,
@@ -69,7 +82,6 @@ def products_by_category(request, slug ):
 
 def products_by_brands(request, category_brand, category_slug):
 
-    print(request.path)
     template = "category/brand_products.html"
     section = "all"
     
@@ -134,6 +146,18 @@ def products_by_brands(request, category_brand, category_slug):
 
     except:
         pass
+    
+    page_num = request.GET.get('page', 1)
+    paginator = Paginator(products, 8)
+
+    try:
+        products = paginator.page(page_num)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver the first page
+        products = paginator.page(1)
+    except EmptyPage:
+        # if the page is out of range, deliver the last page
+        products = paginator.page(paginator.num_pages)
 
     context = {
         "products":products,

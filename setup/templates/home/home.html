@@ -1,36 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %} 
-    <link rel="stylesheet" href="{% static 'css/deals.css' %}">
-{% endblock %}
+
 {% block content %}
     <div class="position-relative" style="top: 70px;">
         {% include 'home/carousel.html' %}
         {% include 'home/navbar.html' %}
         {% include 'home/deals.html' %}
-        {% if products.has_other_pages %}
-            <nav class="d-flex justify-content-center">
-                <ul class="pagination">
-                    {% if products.has_previous %}
-                        <li class="page-item"><a class="page-link" href="?page={{ users.previous_page_number }}">&laquo;</a></li>
-                    {% else %}
-                        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-                    {% endif %}
-                    {% for i in products.paginator.page_range %}
-                        {% if products.number == i %}
-                            <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    {% if products.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">&raquo;</a></li>
-                    {% else %}
-                        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        {% endif %}
+        {% include 'paginator.html' %}
         {% include 'home/products.html' %}
     </div>
 {% endblock %}

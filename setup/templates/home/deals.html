@@ -96,17 +96,24 @@
                                                     {% endif %}
                                                 </div>
                                                 <fieldset class="rating">
-                                                    {% with product.productRaiting.all|raiting as star %}
+                                                    {% if product.productRaiting.all|len != 0 %}
+                                                        {% with product.productRaiting.all|raiting as star %}
+                                                            {% for i in 6|times %}
+                                                                {% if i <= star %}
+                                                                    <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
+                                                                    <label class = "full" ></label>
+                                                                {% else %}
+                                                                    <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
+                                                                    <label class = "full" ></label>
+                                                                {% endif%}
+                                                            {% endfor %}
+                                                        {% endwith %}
+                                                    {% else %}
                                                         {% for i in 6|times %}
-                                                            {% if i <= star %}
-                                                                <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
-                                                                <label class = "full" ></label>
-                                                            {% else %}
-                                                                <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
-                                                                <label class = "full" ></label>
-                                                            {% endif%}
+                                                            <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
+                                                            <label class = "full" ></label>
                                                         {% endfor %}
-                                                    {% endwith %}
+                                                    {% endif %}
                                                 </fieldset>
                                             </div>
                                         </div>
@@ -163,17 +170,24 @@
                                             {% endif %}
                                         </div>
                                         <fieldset class="rating">
-                                            {% with product.productRaiting.all|raiting as star %}
-                                            {% for i in 6|times %}
-                                                {% if i <= star %}
-                                                    <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
-                                                    <label class = "full" ></label>
-                                                {% else %}
+                                            {% if product.productRaiting.all|len != 0 %}
+                                                {% with product.productRaiting.all|raiting as star %}
+                                                    {% for i in 6|times %}
+                                                        {% if i <= star %}
+                                                            <input type="radio"  name="rating" value="{{ forloop.counter }}" checked/>
+                                                            <label class = "full" ></label>
+                                                        {% else %}
+                                                            <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
+                                                            <label class = "full" ></label>
+                                                        {% endif%}
+                                                    {% endfor %}
+                                                {% endwith %}
+                                            {% else %}
+                                                {% for i in 6|times %}
                                                     <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
                                                     <label class = "full" ></label>
-                                                {% endif%}
-                                            {% endfor %}
-                                        {% endwith %}
+                                                {% endfor %}
+                                            {% endif %}
                                         </fieldset>
                                     </div>
                                 </div>

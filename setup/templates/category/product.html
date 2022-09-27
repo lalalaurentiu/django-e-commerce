@@ -111,6 +111,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
                             <fieldset class="rating">
+                                {% if product.productRaiting.all|len != 0 %}
                                     {% with product.productRaiting.all|raiting as star %}
                                         {% for i in 6|times %}
                                             {% if i <= star %}
@@ -122,6 +123,12 @@
                                             {% endif%}
                                         {% endfor %}
                                     {% endwith %}
+                                {% else %}
+                                    {% for i in 6|times %}
+                                        <input type="radio"  name="rating" value="{{ forloop.counter }}"/>
+                                        <label class = "full" ></label>
+                                    {% endfor %}
+                                {% endif %}
                             </fieldset>
                             <div id="message_container" class="form-floating" style="display: none;">
                                 <textarea class="form-control" id="message" >Leave a comment here</textarea>
